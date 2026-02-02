@@ -134,7 +134,7 @@ function addYear() {
 
   
   if (data.length > 10) {
-    alert("Gesperrt: Maximale Anzahl von Jahr(en) erreicht (10 Jahre) !");
+    alert("ℹ️ Maximale Anzahl von Jahr(en) erreicht (10 Jahre) !");
     return;
   }
 
@@ -150,7 +150,7 @@ function addYear() {
 
 function removeYear() {
   if (data.length <= 7) {
-    alert("Gesperrt: Mindestens Standart Jahr(e) müssen vorhanden sein!");
+    alert("ℹ️ Mindestens Standart Jahr(e) müssen vorhanden sein!");
     return;
   }
 
@@ -214,7 +214,7 @@ function recalc() {
           <td class="percent" data-label="TÜFE Kira Artış Oranı" data-value="${row.percent}">
             <input value="${row.percent}" onchange="update(${i},this.value)">
             ${isLast ? '<br><br><button class="row-btn remove" onclick="removeYear()"> ➖ </button>' : ''}
-            ${isLast ? '<button class="row-btn reset" onclick="resetData()">↺</button>' : ''}
+            ${isLast ? '<button class="row-btn reset" onclick="resetData()">↩️</button>' : ''}
           </td>
         </tr>
       `;
