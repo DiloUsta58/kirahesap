@@ -7,13 +7,13 @@ const months = [
 const STORAGE_KEY = "kiraTableData";
 
 const data = [
-  { year: 2023, base: 5000, percent: 25 },
+  { year: 2023, base: 5000, percent: 0 },
   { year: 2024, base: null, percent: 25 },
   { year: 2025, base: null, percent: 58.51 },
-  { year: 2026, base: null, percent: 50 },
-  { year: 2027, base: null, percent: 25 },
-  { year: 2028, base: null, percent: 25 },
-  { year: 2029, base: null, percent: 25 }
+  { year: 2026, base: null, percent: 0 },
+  { year: 2027, base: null, percent: 0 },
+  { year: 2028, base: null, percent: 0 },
+  { year: 2029, base: null, percent: 0 }
 ];
 
 const table = document.getElementById("table");
