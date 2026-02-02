@@ -74,9 +74,14 @@ function build() {
 
   tfoot.innerHTML = `
     <tr>
-      <td colspan="12" class="total">Toplam:</td>
-      <td id="grandTotal" class="total"></td>
-      
+
+
+
+      <td></td>
+        <td colspan="12" class="total">Toplam:</td>
+        <td id="grandTotal" class="total"></td>
+      <td></td>
+
     </tr>
   `;
 
