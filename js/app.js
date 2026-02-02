@@ -201,7 +201,7 @@ function recalc() {
             classes.push("current-month");     // 🔥 GELBER RAHMEN
           }
 
-          r += `<td class="${classes.join(" ")}" data-label="${m}">${tr(v)}</td>`;
+          r += `<td class="${classes.join(" ")}" data-label="${m}"><span class="cell-value">${tr(v)}</span></td>`;
           grand += v;
         });
 

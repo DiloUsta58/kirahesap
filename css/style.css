@@ -162,6 +162,10 @@ th {
         background: #262626;
         border-radius: 6px;
     }
+  .cell-value {
+      min-width: 120px;
+      text-align: right;
+  }
 }
 
 /* ================= DRUCK = IMMER DESKTOP-TABELLE ================= */
@@ -254,15 +258,29 @@ th {
 }
 
 /* Mai (grün) im aktuellen Jahr rot einrahmen */
-tr.current-year td.green {
-    outline: 2px solid #ff3b3b;
-    outline-offset: -2px;
-}
 
 .current-year .current-month {
-    outline: 3px solid #ffd400;
-    outline-offset: -2px;
+    position: relative;
 }
+
+.current-year td.green .cell-value {
+    border: 3px solid #ff3b3b;
+}
+
+
+/* Zahl rechts einkapseln */
+.cell-value {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+/* aktueller Monat im aktuellen Jahr → GELB */
+.current-year .current-month .cell-value {
+    border: 3px solid #ffd400;
+}
+
+
 
 @keyframes highlightPulse {
   0%   { box-shadow: 0 0 0 0 rgba(255, 212, 0, 0.8); }
