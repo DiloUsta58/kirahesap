@@ -199,4 +199,42 @@ th {
 .row-btn:hover {
   background: #ddd;
 }
+.row-btn.reset {
+  font-size: 13px;
+}
 
+/* =========================
+   MOBILE / TABLET FIX
+   ========================= */
+@media (max-width: 1024px) {
+
+  body {
+    font-size: 15px;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 1200px; /* wichtig: verhindert Zusammendrücken */
+  }
+
+  th, td {
+    padding: 10px 12px;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  input {
+    font-size: 15px;
+    width: 60px;
+  }
+
+  .row-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+}

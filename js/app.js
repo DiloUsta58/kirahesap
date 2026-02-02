@@ -16,6 +16,9 @@ const data = [
   { year: 2029, base: null, percent: 0 }
 ];
 
+const DEFAULT_DATA = JSON.parse(JSON.stringify(data));
+
+
 const table = document.getElementById("table");
 const thead = table.querySelector("thead");
 const tbody = table.querySelector("tbody");
@@ -73,6 +76,7 @@ function build() {
     <tr>
       <td colspan="12" class="total">Toplam:</td>
       <td id="grandTotal" class="total"></td>
+      
     </tr>
   `;
 
@@ -155,6 +159,7 @@ data.forEach((row, i) => {
       <td class="percent" data-label="ZAM" data-value="${row.percent}">
         <input value="${row.percent}" onchange="update(${i},this.value)">
         ${isLast ? '<br><br><button class="row-btn remove" onclick="removeYear()"> ➖ </button>' : ''}
+        ${isLast ? '<button class="row-btn reset" onclick="resetData()">⟳</button>' : ''}
       </td>
     </tr>
   `;
@@ -173,6 +178,20 @@ function update(index, value) {
   }
   recalc();
   saveData();   // ← HIER
+}
+
+/* Reset-Funktion */
+function resetData() {
+  if (!confirm("Alle Änderungen verwerfen und Standardwerte laden?")) {
+    return;
+  }
+
+  localStorage.removeItem(STORAGE_KEY);
+
+  data.length = 0;
+  DEFAULT_DATA.forEach(row => data.push({ ...row }));
+
+  recalc();
 }
 
 
