@@ -168,95 +168,6 @@ th {
   }
 }
 
-/* ================= DRUCK = IMMER DESKTOP-TABELLE ================= */
-@media print {
-
-    body {
-        background: white !important;
-        color: black !important;
-    }
-
-    table {
-        display: table !important;
-        width: 100% !important;
-        background: white !important;
-        overflow: visible !important;
-    }
-
-    thead {
-        display: table-header-group !important;
-    }
-
-    tbody {
-        display: table-row-group !important;
-    }
-
-    tr {
-        display: table-row !important;
-        page-break-inside: avoid;
-        background: white !important;
-        border: none !important;
-    }
-
-    th, td {
-        display: table-cell !important;
-        border: 1px solid #999 !important;
-        padding: 6px 8px !important;
-        font-size: 11px !important;
-        color: black !important;
-        white-space: nowrap !important;
-    }
-
-    /* Mobile Card-Features AUS */
-    td::before {
-        content: none !important;
-    }
-
-    /* Buttons & Inputs nicht drucken */
-    .row-btn,
-    .percent input {
-        display: none !important;
-    }
-
-    /* Prozentwert im Druck anzeigen */
-    .percent::after {
-        content: attr(data-value) "%";
-        display: inline-block;
-        font-weight: bold;
-        color: black;
-    }
-
-
-    /* Farben für Druck neutralisieren */
-    .year,
-    .total,
-    .percent {
-        background: #f0f0f0 !important;
-        color: black !important;
-    }
-
-    .green {
-        color: black !important;
-        font-weight: bold;
-    }
-
-    .print-cell {
-        text-align: center;
-    }
-
-    .print-cell button {
-        padding: 6px 12px;
-        font-size: 13px;
-        border-radius: 6px;
-        border: none;
-        cursor: pointer;
-        background: #2f5597;
-        color: white;
-        display: none !important;  /* Button nicht drucken */
-    }
-
-}
-
 /* Mai (grün) im aktuellen Jahr rot einrahmen */
 
 .current-year .current-month {
@@ -295,4 +206,189 @@ th {
 
 .row-btn {
      font-size: 14px;
+}
+
+
+/* ================= DRUCK = IMMER DESKTOP-TABELLE ================= */
+@media print {
+
+    @page {
+        size: A4 landscape;
+        margin: 10mm;
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+    }
+
+    table {
+        display: table !important;
+        width: 100% !important;
+        background: white !important;
+        overflow: visible !important;
+        table-layout: fixed !important;   /* <<< WICHTIG */
+    }
+
+    thead {
+        display: table-header-group !important;
+    }
+
+    tbody {
+        display: table-row-group !important;
+    }
+
+    tr {
+        display: table-row !important;
+        page-break-inside: avoid;
+        background: white !important;
+        border: none !important;
+    }
+
+    th, td {
+        display: table-cell !important;
+        border: 1px solid #999 !important;
+        padding: 5px 6px !important;
+        font-size: 10px !important;
+        color: black !important;
+
+        /* <<< DAS IST DER FIX */
+        white-space: normal !important;
+        word-break: break-word !important;
+    }
+
+    /* Mobile Card-Features AUS */
+    td::before {
+        content: none !important;
+    }
+
+    /* Buttons & Inputs nicht drucken */
+    .row-btn,
+    .percent input {
+        display: none !important;
+    }
+
+    /* Prozentwert im Druck anzeigen */
+    .percent::after {
+        content: attr(data-value) "%";
+        display: inline-block;
+        font-weight: bold;
+        color: black;
+    }
+
+    /* Farben für Druck neutralisieren */
+    .year,
+    .total,
+    .percent {
+        background: #f0f0f0 !important;
+        color: black !important;
+    }
+
+    .green {
+        color: black !important;
+        font-weight: bold;
+    }
+
+    .print-cell {
+        text-align: center;
+    }
+
+    .print-cell button {
+        display: none !important;
+    }
+
+    /* cell-value im Druck auflösen */
+    .cell-value {
+        display: inline !important;
+        padding: 0 !important;
+        border: none !important;
+        white-space: normal !important;
+    }
+
+    /* Falls Toplam-Zellen data-label nutzen */
+    td.total::before {
+        content: none !important;
+    }
+
+/* ================= TÜFE SPALTE ================= */
+
+
+
+    th.percent {
+        width: 80px !important;
+        text-align: center !important;
+        font-size: 9px !important;
+        line-height: 1.2 !important;
+        white-space: pre-line !important; /* WICHTIG */
+    }
+
+    /* Erzwingt Excel-ähnlichen Umbruch */
+    th.percent::after {
+        content: "" !important;
+    }
+
+    td.percent {
+        width: 80px !important;
+        white-space: nowrap !important;
+        text-align: center !important;
+    }
+
+    td.percent::after {
+        white-space: nowrap !important;
+        display: inline-block;
+    }
+
+    /* ================= TOPLAM / TRY ================= */
+
+    td.total {
+        white-space: nowrap !important; /* VERHINDERT TRY-UMBRUCH */
+    } 
+
+
+    /* Erste Spalte (Yıl) – REALISTISCH & stabil */
+    th:first-child,
+    td.year {
+        width: 48px !important;
+        min-width: 48px !important;
+        max-width: 48px !important;
+        text-align: center !important;
+        padding: 4px 4px !important;
+        white-space: nowrap !important;
+    }
+
+        /* ================= SPALTENBREITEN FEST VERGEBEN ================= */
+
+        /* Jahr */
+        th:first-child,
+        td.year {
+            width: 46px !important;
+            min-width: 46px !important;
+            max-width: 46px !important;
+            text-align: center !important;
+            white-space: nowrap !important;
+        }
+
+        /* Monate */
+        th:nth-child(n+2):nth-child(-n+13),
+        td:nth-child(n+2):nth-child(-n+13) {
+            width: 62px !important;
+        }
+
+        /* Toplam */
+        th.total,
+        td.total {
+            width: 95px !important;
+            white-space: nowrap !important;
+        }
+
+        /* TÜFE */
+        th.percent,
+        td.percent {
+            width: 70px !important;
+            min-width: 70px !important;
+            max-width: 70px !important;
+            text-align: center !important;
+        }
+
+   
 }
