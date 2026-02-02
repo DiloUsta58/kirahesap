@@ -71,7 +71,7 @@ function build() {
 
   thead.innerHTML = `
     <tr><th colspan="15" class="title">
-      Sivas Kilavus Huzur Mh. Hasret Apt. - Kira Ödeme Durumu
+      Sivas  Kira Ödeme Durumu
     </th></tr>
     <tr>
       <th>Yıl</th>
