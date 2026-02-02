@@ -138,8 +138,11 @@ th {
         font-size: 16px;
         border-radius: 6px;
         margin-bottom: 8px;
-        padding: 8px;
+
+        padding: 8px 18px 8px 8px;   /* links weniger Abstand padding: oben | rechts | unten | links */
+        text-align: left;          /* statt center */
     }
+
 
     .green {
         color: #00e676;
@@ -162,22 +165,92 @@ th {
 }
 
 /* ================= DRUCK ================= */
+/* ================= DRUCK = IMMER DESKTOP-TABELLE ================= */
 @media print {
+
     body {
-        background: white;
-        color: black;
+        background: white !important;
+        color: black !important;
     }
 
     table {
-        width: 100%;
+        display: table !important;
+        width: 100% !important;
+        background: white !important;
+        overflow: visible !important;
+    }
+
+    thead {
+        display: table-header-group !important;
+    }
+
+    tbody {
+        display: table-row-group !important;
+    }
+
+    tr {
+        display: table-row !important;
         page-break-inside: avoid;
+        background: white !important;
+        border: none !important;
     }
 
     th, td {
-        font-size: 11px;
+        display: table-cell !important;
+        border: 1px solid #999 !important;
+        padding: 6px 8px !important;
+        font-size: 11px !important;
+        color: black !important;
+        white-space: nowrap !important;
     }
 
-    .percent input {
-        display: none;
+    /* Mobile Card-Features AUS */
+    td::before {
+        content: none !important;
     }
+
+    /* Buttons & Inputs nicht drucken */
+    .row-btn,
+    .percent input {
+        display: none !important;
+    }
+
+    /* Prozentwert im Druck anzeigen */
+    .percent::after {
+        content: attr(data-value) "%";
+        display: inline-block;
+        font-weight: bold;
+        color: black;
+    }
+
+
+    /* Farben für Druck neutralisieren */
+    .year,
+    .total,
+    .percent {
+        background: #f0f0f0 !important;
+        color: black !important;
+    }
+
+    .green {
+        color: black !important;
+        font-weight: bold;
+    }
+
+    .print-cell {
+        text-align: center;
+    }
+
+    .print-cell button {
+        padding: 6px 12px;
+        font-size: 13px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        background: #2f5597;
+        color: white;
+        display: none !important;  /* Button nicht drucken */
+    }
+
 }
+

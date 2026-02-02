@@ -74,18 +74,20 @@ function build() {
 
   tfoot.innerHTML = `
     <tr>
-
-
-
       <td></td>
         <td colspan="12" class="total">Toplam:</td>
         <td id="grandTotal" class="total"></td>
-      <td></td>
-
+        <td class="print-cell">
+          <button onclick="printTable()">🖨 DRUCKEN</button>
+        </td>
     </tr>
   `;
 
   recalc();
+}
+
+function printTable() {
+    window.print();
 }
 
 
