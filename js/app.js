@@ -68,7 +68,7 @@ function build() {
     <tr>
       <th>Yıl</th>
       ${months.map(m=>`<th>${m}</th>`).join("")}
-      <th>Toplam</th><th>ZAM</th>
+      <th>Toplam</th><th>TÜFE Kira Artış Oranı:</th>
     </tr>
   `;
 
@@ -84,8 +84,6 @@ function build() {
 
     </tr>
   `;
-
-
 
   recalc();
 }
@@ -161,7 +159,7 @@ data.forEach((row, i) => {
         ${tr(oldV * 4 + newV * 8)}
       </td>
 
-      <td class="percent" data-label="ZAM" data-value="${row.percent}">
+      <td class="percent" data-label="TÜFE Kira Artış Oranı" data-value="${row.percent}">
         <input value="${row.percent}" onchange="update(${i},this.value)">
         ${isLast ? '<br><br><button class="row-btn remove" onclick="removeYear()"> ➖ </button>' : ''}
         ${isLast ? '<button class="row-btn reset" onclick="resetData()">⟳</button>' : ''}
