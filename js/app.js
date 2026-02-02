@@ -17,6 +17,7 @@ const data = [
 ];
 
 const DEFAULT_DATA = JSON.parse(JSON.stringify(data));
+const CURRENT_YEAR = new Date().getFullYear();
 
 
 const table = document.getElementById("table");
@@ -24,7 +25,14 @@ const thead = table.querySelector("thead");
 const tbody = table.querySelector("tbody");
 const tfoot = table.querySelector("tfoot");
 
-const tr = v => v.toLocaleString("tr-TR",{minimumFractionDigits:2});
+const tr = v =>
+  Number(v).toLocaleString("tr-TR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }) + " TRY";
+
+
+
 
 function saveData() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -104,6 +112,12 @@ document.addEventListener("click", function (e) {
 function addYear() {
   const last = data[data.length - 1];
 
+  
+  if (data.length > 10) {
+    alert("Gesperrt: Maximale Anzahl von Jahr(en) erreicht (10 Jahre) !");
+    return;
+  }
+
   data.push({
     year: last.year + 1,
     base: null,
@@ -115,10 +129,11 @@ function addYear() {
 }
 
 function removeYear() {
-  if (data.length <= 1) {
-    alert("Mindestens ein Jahr muss vorhanden sein.");
+  if (data.length <= 7) {
+    alert("Gesperrt: Mindestens Standart Jahr(e) müssen vorhanden sein!");
     return;
   }
+
 
   data.pop();     // letztes Jahr entfernen
   recalc();
@@ -141,13 +156,16 @@ data.forEach((row, i) => {
   const newV = oldV * (1 + row.percent / 100);
   const isLast = i === data.length - 1;
 
-  let r = `
-    <tr>
-      <td class="year" data-label="Yıl">
-        ${row.year}
-        ${isLast ? '<br><br><button class="row-btn add" onclick="addYear()"> ➕ </button>' : ''}
-      </td>
-  `;
+    const isCurrentYear = row.year === CURRENT_YEAR;
+
+    let r = `
+      <tr class="${isCurrentYear ? 'current-year' : ''}">
+        <td class="year" data-label="Yıl">
+          ${row.year}
+          ${isLast ? '<br><br><button class="row-btn add" onclick="addYear()"> ➕ </button>' : ''}
+        </td>
+    `;
+
 
   months.forEach((m, idx) => {
     const v = idx < 4 ? oldV : newV;

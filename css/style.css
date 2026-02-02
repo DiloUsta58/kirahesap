@@ -116,7 +116,7 @@ th {
         align-items: center;
         border: none;
         border-bottom: 1px solid #333;
-        padding: 8px 4px;
+        padding: 8px 18px 8px 8px;
         white-space: normal;
         font-size: 15px;
     }
@@ -164,7 +164,6 @@ th {
     }
 }
 
-/* ================= DRUCK ================= */
 /* ================= DRUCK = IMMER DESKTOP-TABELLE ================= */
 @media print {
 
@@ -254,3 +253,8 @@ th {
 
 }
 
+/* Mai (grün) im aktuellen Jahr rot einrahmen */
+tr.current-year td.green {
+    outline: 2px solid #ff3b3b;
+    outline-offset: -2px;
+}
