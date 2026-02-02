@@ -56,14 +56,34 @@ function saveData() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
+
 function loadData() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (!saved) {
+      data.length = 0;
+      DEFAULT_DATA.forEach(r => data.push(structuredClone(r)));
+      return;
+    }
+
     const parsed = JSON.parse(saved);
+
+    if (!Array.isArray(parsed)) {
+      throw new Error("Invalid data");
+    }
+
     data.length = 0;
     parsed.forEach(row => data.push(row));
+
+  } catch (e) {
+    console.warn("Storage defekt – Standardwerte geladen");
+
+    data.length = 0;
+    DEFAULT_DATA.forEach(r => data.push(structuredClone(r)));
   }
 }
+
 
 
 function build() {
@@ -151,57 +171,107 @@ function recalc() {
   tbody.innerHTML = "";
   let grand = 0;
 
-data.forEach((row, i) => {
-  const oldV = row.base;
-  const newV = oldV * (1 + row.percent / 100);
-  const isLast = i === data.length - 1;
 
-    const isCurrentYear = row.year === CURRENT_YEAR;
+  const now = new Date();
+  const CURRENT_YEAR = now.getFullYear();
+  const CURRENT_MONTH_INDEX = now.getMonth(); // 0 = Ocak
 
-    let r = `
-      <tr class="${isCurrentYear ? 'current-year' : ''}">
-        <td class="year" data-label="Yıl">
-          ${row.year}
-          ${isLast ? '<br><br><button class="row-btn add" onclick="addYear()"> ➕ </button>' : ''}
-        </td>
-    `;
+    data.forEach((row, i) => {
+      const oldV = row.base;
+      const newV = oldV * (1 + row.percent / 100);
+      const isLast = i === data.length - 1;
 
+        const isCurrentYear = row.year === CURRENT_YEAR;
 
-  months.forEach((m, idx) => {
-    const v = idx < 4 ? oldV : newV;
-    const cls = idx === 4 ? "green" : "";
-    r += `<td class="${cls}" data-label="${m}">${tr(v)}</td>`;
-    grand += v;
-  });
-
-  r += `
-      <td class="total" data-label="Toplam">
-        ${tr(oldV * 4 + newV * 8)}
-      </td>
-
-      <td class="percent" data-label="TÜFE Kira Artış Oranı" data-value="${row.percent}">
-        <input value="${row.percent}" onchange="update(${i},this.value)">
-        ${isLast ? '<br><br><button class="row-btn remove" onclick="removeYear()"> ➖ </button>' : ''}
-        ${isLast ? '<button class="row-btn reset" onclick="resetData()">⟳</button>' : ''}
-      </td>
-    </tr>
-  `;
-
-  tbody.insertAdjacentHTML("beforeend", r);
-});
+        let r = `
+          <tr class="${isCurrentYear ? 'current-year' : ''}">
+            <td class="year" data-label="Yıl">
+              ${row.year}
+              ${isLast ? '<br><br><button class="row-btn add" onclick="addYear()"> ➕ </button>' : ''}
+            </td>
+        `;
 
 
-  document.getElementById("grandTotal").innerText = tr(grand);
-}
+        months.forEach((m, idx) => {
+          const v = idx < 4 ? oldV : newV;
 
-function update(index, value) {
-  data[index].percent = parseFloat(value.replace(",", "."));
-  for (let i = index + 1; i < data.length; i++) {
-    data[i].base = null;
+          let classes = [];
+          if (idx === 4) classes.push("green"); // Mai grün
+          if (isCurrentYear && idx === CURRENT_MONTH_INDEX) {
+            classes.push("current-month");     // 🔥 GELBER RAHMEN
+          }
+
+          r += `<td class="${classes.join(" ")}" data-label="${m}">${tr(v)}</td>`;
+          grand += v;
+        });
+
+
+      r += `
+          <td class="total" data-label="Toplam">
+            ${tr(oldV * 4 + newV * 8)}
+          </td>
+
+          <td class="percent" data-label="TÜFE Kira Artış Oranı" data-value="${row.percent}">
+            <input value="${row.percent}" onchange="update(${i},this.value)">
+            ${isLast ? '<br><br><button class="row-btn remove" onclick="removeYear()"> ➖ </button>' : ''}
+            ${isLast ? '<button class="row-btn reset" onclick="resetData()">⟳</button>' : ''}
+          </td>
+        </tr>
+      `;
+
+      tbody.insertAdjacentHTML("beforeend", r);
+    });
+    document.getElementById("grandTotal").innerText = tr(grand);
+    scrollToCurrentYearMobile();
   }
-  recalc();
-  saveData();   // ← HIER
+
+/* AKTUELLE JAHR SPRINGEN / MOBIL */
+  function scrollToCurrentYearMobile() {
+  // nur Mobile
+  if (window.innerWidth > 768) return;
+
+  const el = document.querySelector("tr.current-year");
+  if (!el) return;
+
+  // kleiner Delay, damit DOM sicher fertig ist
+  setTimeout(() => {
+    el.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+    // kurzer Highlight-Blink
+    el.classList.add("flash");
+    setTimeout(() => el.classList.remove("flash"), 1300);
+
+  }, 200);
 }
+
+  function update(index, value) {
+
+    // Komma erlauben, Zahl parsen
+    let p = parseFloat(String(value).replace(",", "."));
+
+    // Absicherung
+    if (isNaN(p)) p = 0;
+    if (p < 0) p = 0;
+    if (p > 100) p = 100;
+
+    // auf 2 Nachkommastellen begrenzen
+    p = Math.round(p * 100) / 100;
+
+    // Prozent setzen
+    data[index].percent = p;
+
+    // Folgende Jahre neu berechnen erzwingen
+    for (let i = index + 1; i < data.length; i++) {
+      data[i].base = null;
+    }
+
+    recalc();
+    saveData();   // bleibt GENAU hier
+  }
+
 
 /* Reset-Funktion */
 function resetData() {
