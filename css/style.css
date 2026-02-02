@@ -292,3 +292,7 @@ th {
 .current-year.flash {
   animation: highlightPulse 1.2s ease-out;
 }
+
+.row-btn {
+     font-size: 14px;
+}

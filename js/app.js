@@ -29,7 +29,7 @@ const tr = v =>
   Number(v).toLocaleString("tr-TR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
-  }) + " TRY";
+  });
 
 
 
@@ -104,7 +104,7 @@ function build() {
     <tr>
       <td></td>
         <td colspan="12" class="total">Toplam:</td>
-        <td id="grandTotal" class="total"></td>
+        <td id="grandTotal" class="total"></td> 
         <td class="print-cell">
           <button onclick="printTable()">🖨 DRUCKEN</button>
         </td>
@@ -208,20 +208,20 @@ function recalc() {
 
       r += `
           <td class="total" data-label="Toplam">
-            ${tr(oldV * 4 + newV * 8)}
+            ${tr(oldV * 4 + newV * 8)} TRY
           </td>
 
           <td class="percent" data-label="TÜFE Kira Artış Oranı" data-value="${row.percent}">
             <input value="${row.percent}" onchange="update(${i},this.value)">
             ${isLast ? '<br><br><button class="row-btn remove" onclick="removeYear()"> ➖ </button>' : ''}
-            ${isLast ? '<button class="row-btn reset" onclick="resetData()">⟳</button>' : ''}
+            ${isLast ? '<button class="row-btn reset" onclick="resetData()">↺</button>' : ''}
           </td>
         </tr>
       `;
 
       tbody.insertAdjacentHTML("beforeend", r);
     });
-    document.getElementById("grandTotal").innerText = tr(grand);
+    document.getElementById("grandTotal").innerText = tr(grand) + " TRY";
     scrollToCurrentYearMobile();
   }
 
