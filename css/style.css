@@ -1,176 +1,183 @@
-
-/* =========================
-   DARK MODE – IMMER AKTIV
-   ========================= */
-:root {
-  --bg: #121212;
-  --bg2: #1e1e1e;
-  --border: #2e2e2e;
-  --text: #e0e0e0;
-  --muted: #b0b0b0;
-
-  --green: #2e7d32;
-  --red: #c62828;
-  --input-bg: #2a2a2a;
-}
-
+/* ================= BASIS (DARK MODE STANDARD) ================= */
 body {
-  font-family: Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  margin: 0;
-  padding: 0;
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
 }
 
 table {
-  border-collapse: collapse;
-  margin: 20px auto;
-  width: 1200px;
-  max-width: 100%;
-  background: var(--bg2);
+    border-collapse: collapse;
+    margin: 16px auto;
+    width: 1200px;
+    max-width: 100%;
+    background: #1e1e1e;
 }
 
 th, td {
-  border: 1px solid var(--border);
-  padding: 6px 8px;
-  text-align: right;
-  white-space: nowrap;
+    border: 1px solid #333;
+    padding: 8px 10px;
+    text-align: right;
+    white-space: nowrap;
+    font-size: 14px;
 }
 
 th {
-  background: #1a1a1a;
-  color: var(--text);
-  text-align: center;
+    background: #2f5597;
+    color: #fff;
+    text-align: center;
 }
 
 .title {
-  background: #2f5597;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
+    background: #1f3d7a;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .year {
-  background: #1b1b1b;
-  text-align: center;
-  font-weight: bold;
+    background: #2a2a2a;
+    text-align: center;
+    font-weight: bold;
 }
 
 .green {
-  background: var(--green);
-  color: #fff;
-  font-weight: bold;
+    color: #00e676;
+    font-weight: bold;
 }
 
 .total {
-  background: #1b1b1b;
-  font-weight: bold;
+    background: #2b2b2b;
+    font-weight: bold;
 }
 
 .percent {
-  background: var(--red);
-  color: white;
-  text-align: center;
+    background: #d32f2f;
+    color: white;
+    text-align: center;
 }
 
 .percent input {
-  width: 60px;
-  border: 1px solid #fff;
-  background: var(--input-bg);
-  color: #fff;
-  font-weight: bold;
-  text-align: center;
-}
-
-/* Steuer-Buttons */
-.row-btn {
-  width: 18px;
-  height: 18px;
-  margin: 0 4px;
-  padding: 0;
-  font-size: 14px;
-  line-height: 16px;
-  border: 1px solid #888;
-  background: #2a2a2a;
-  color: var(--text);
-  cursor: pointer;
-  vertical-align: middle;
-}
-
-.row-btn:hover {
-  background: #3a3a3a;
-}
-
-/* =========================
-   MOBILE / TABLET – LESBAR
-   ========================= */
-@media (max-width: 1024px) {
-  body {
-    font-size: 15px;
-  }
-
-  .table-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  table {
-    min-width: 1200px;
-  }
-
-  th, td {
-    padding: 10px 12px;
-    font-size: 15px;
-  }
-
-  input {
-    font-size: 15px;
-  }
-
-  .row-btn {
-    width: 24px;
-    height: 24px;
-    font-size: 16px;
-  }
-}
-
-/* =========================
-   PRINT – HELL & SAUBER
-   ========================= */
-@media print {
-
-  @page {
-    size: A4 landscape;
-    margin: 12mm;
-  }
-
-  body {
-    background: #fff !important;
-    color: #000 !important;
-  }
-
-  table, th, td {
-    background: #fff !important;
-    color: #000 !important;
-    border-color: #000 !important;
-  }
-
-  td::before {
-    content: none !important;
-    display: none !important;
-  }
-
-  .row-btn {
-    display: none !important;
-  }
-
-  .percent input {
-    display: none !important;
-  }
-
-  .percent::after {
-    content: attr(data-value) " %";
+    width: 60px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    color: white;
     font-weight: bold;
-  }
+}
+
+/* ================= TABLET (DESKTOP LOOK, SCROLL OK) ================= */
+@media (max-width: 1023px) {
+    body {
+        overflow-x: auto;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        width: 100%;
+    }
+}
+
+/* ================= MOBILE = CARD LAYOUT ================= */
+@media (max-width: 767px) {
+
+    body {
+        padding: 10px;
+    }
+
+    table {
+        width: 100%;
+        border: none;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tbody, tr {
+        display: block;
+        width: 100%;
+    }
+
+    tr {
+        background: #1c1c1c;
+        margin-bottom: 16px;
+        border-radius: 10px;
+        padding: 10px;
+        border: 1px solid #333;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: none;
+        border-bottom: 1px solid #333;
+        padding: 8px 4px;
+        white-space: normal;
+        font-size: 15px;
+    }
+
+    td:last-child {
+        border-bottom: none;
+    }
+
+    td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #aaa;
+        text-align: left;
+    }
+
+    .year {
+        background: #2f5597;
+        color: #fff;
+        font-size: 16px;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        padding: 8px;
+    }
+
+    .green {
+        color: #00e676;
+    }
+
+    .percent {
+        background: #b71c1c;
+        border-radius: 6px;
+        padding: 6px;
+    }
+
+    .percent input {
+        width: 55px;
+    }
+
+    .total {
+        background: #262626;
+        border-radius: 6px;
+    }
+}
+
+/* ================= DRUCK ================= */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+
+    table {
+        width: 100%;
+        page-break-inside: avoid;
+    }
+
+    th, td {
+        font-size: 11px;
+    }
+
+    .percent input {
+        display: none;
+    }
 }
