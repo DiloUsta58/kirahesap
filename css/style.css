@@ -1,26 +1,663 @@
 /* ================= BASIS (DARK MODE STANDARD) ================= */
+html,
+body {
+    min-height: 100%;
+    height: 100%;
+}
+
+:root {
+    --topbar-height: 48px;
+    --footer-height: 34px;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: #121212;
     color: #e0e0e0;
     margin: 0;
     padding: 0;
+    overflow: hidden;
+}
+
+main {
+    width: 100vw;
+    height: calc(100vh - var(--topbar-height) - var(--footer-height));
+    height: calc(100dvh - var(--topbar-height) - var(--footer-height));
+    overflow: hidden;
+}
+
+.app-topbar {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 48px;
+    width: 100vw;
+    padding: 0 12px;
+    background: #1f3d7a;
+    box-sizing: border-box;
+    color: #fff;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.menu-btn {
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    background: #2f5597;
+    color: #fff;
+    font-size: 24px;
+    line-height: 1;
+}
+
+.app-title {
+    flex: 1;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.app-menu {
+    position: absolute;
+    top: 48px;
+    left: 8px;
+    display: none;
+    min-width: 250px;
+    padding: 6px;
+    background: #20242b;
+    border: 1px solid #3a4658;
+    border-radius: 8px;
+    box-shadow: 0 14px 32px rgba(0,0,0,0.45);
+}
+
+.app-menu.open {
+    display: grid;
+    gap: 4px;
+}
+
+.menu-item {
+    width: 100%;
+    padding: 12px 14px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #f2f4f8;
+    text-align: left;
+    font-size: 15px;
+}
+
+.menu-item.active,
+.menu-item:active {
+    background: #2f5597;
+}
+
+.app-page {
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.app-page.active {
+    display: block;
+}
+
+.table-wrapper {
+    width: 100vw;
+    height: calc(100vh - var(--topbar-height) - var(--footer-height));
+    height: calc(100dvh - var(--topbar-height) - var(--footer-height));
+    overflow: auto;
+    background: #121212;
+    padding-bottom: env(safe-area-inset-bottom);
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+}
+
+.app-footer {
+    position: relative;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    gap: 10px;
+    height: var(--footer-height);
+    padding: 0 12px;
+    box-sizing: border-box;
+    background: #172345;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    color: #dbe6ff;
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.footer-logo {
+    width: 16px;
+    height: 16px;
+}
+
+.version-ok {
+    color: #34d399;
+    font-weight: 700;
+}
+
+.version-outdated {
+    color: #ff6b6b;
+    font-weight: 700;
+}
+
+.version-checking {
+    color: #facc15;
+    font-weight: 700;
+}
+
+.update-notice {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+    background: rgba(0,0,0,0.58);
+}
+
+.update-box {
+    width: min(420px, 100%);
+    padding: 18px;
+    border: 1px solid #3a4658;
+    border-radius: 8px;
+    background: #20242b;
+    color: #f4f7fb;
+    box-shadow: 0 20px 48px rgba(0,0,0,0.5);
+}
+
+.update-box h3 {
+    margin: 0 0 12px;
+    color: #fff;
+}
+
+.update-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.update-actions button {
+    flex: 1;
+    min-height: 38px;
+    border: 0;
+    border-radius: 6px;
+    background: #2f5597;
+    color: #fff;
+    font-weight: 700;
+}
+
+.update-actions .secondary {
+    background: #3b4250;
+}
+
+.sozlesme-page {
+    background: #121212;
+}
+
+.sozlesme-layout {
+    --preview-percent: 40%;
+    display: grid;
+    grid-template-columns: minmax(300px, 360px) 10px minmax(0, 1fr);
+    gap: 14px;
+    height: 100%;
+    padding: 14px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.preview-resize-handle {
+    align-self: stretch;
+    border-radius: 999px;
+    background: transparent;
+    cursor: col-resize;
+    touch-action: none;
+    position: relative;
+}
+
+.preview-resize-handle::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 4px;
+    height: 56px;
+    transform: translate(-50%, -50%);
+    border-radius: 999px;
+    background: #5f7498;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+.preview-resize-handle::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 1px;
+    background: rgba(143, 163, 196, 0.22);
+}
+
+.contract-form,
+.contract-preview {
+    height: 100%;
+    overflow: auto;
+    border: 1px solid #333b48;
+    border-radius: 8px;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+}
+
+.contract-form {
+    background: #181b20;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.form-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex: 0 0 auto;
+}
+
+#sozlesmeForm {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    flex-direction: column;
+}
+
+.form-head h1 {
+    flex: 1;
+    margin: 0;
+    color: #fff;
+    font-size: 18px;
+}
+
+.form-head button {
+    padding: 8px 10px;
+    border: 0;
+    border-radius: 6px;
+    background: #2f5597;
+    color: #fff;
+    font-weight: 700;
+}
+
+.form-section {
+    display: none;
+    margin-bottom: 12px;
+    padding: 10px;
+    border: 1px solid #303846;
+    border-radius: 8px;
+    background: #20242b;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.form-section.active-step {
+    display: block;
+    flex: 1;
+    min-height: 0;
+}
+
+.form-section h2 {
+    margin: 0 0 10px;
+    color: #dfe8ff;
+    font-size: 15px;
+}
+
+.form-section label {
+    display: block;
+    margin-bottom: 10px;
+    color: #d8dde8;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+    .form-section input,
+    .form-section textarea,
+    .form-section select {
+    width: 100%;
+    margin-top: 5px;
+    padding: 9px 10px;
+    border: 1px solid #465367;
+    border-radius: 6px;
+    background: #11141a;
+    color: #fff;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.form-section textarea {
+    min-height: 70px;
+    resize: vertical;
+}
+
+.form-section input[readonly] {
+    background: #182234;
+    color: #dfe8ff;
+    border-color: #365786;
+    font-weight: 700;
+}
+
+.signature-pad-block {
+    margin-bottom: 14px;
+}
+
+.signature-pad-title {
+    margin-bottom: 6px;
+    color: #d8dde8;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.signature-pad {
+    display: block;
+    width: 100%;
+    height: 128px;
+    border: 1px solid #465367;
+    border-radius: 6px;
+    background: #fff;
+    touch-action: none;
+}
+
+.signature-pad-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.signature-pad-group {
+    display: grid;
+    gap: 12px;
+}
+
+.clear-signature {
+    margin-top: 7px;
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 6px;
+    background: #4b5568;
+    color: #fff;
+    font-weight: 700;
+}
+
+.signature-pad-subtitle {
+    margin-bottom: 7px;
+    color: #d8dde8;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.form-step-nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+    margin-top: auto;
+}
+
+.form-step-nav button {
+    min-height: 42px;
+    border: 0;
+    border-radius: 6px;
+    background: #2f5597;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.form-step-nav button:disabled {
+    opacity: 0.45;
+}
+
+.form-step-nav span {
+    min-width: 46px;
+    color: #cdd6e6;
+    text-align: center;
+    font-weight: 700;
+}
+
+.contract-preview {
+    background: #f8f8f8;
+    color: #111;
+    padding: 22px 28px;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.contract-preview h1 {
+    margin: 0 0 16px;
+    text-align: center;
+    font-size: 20px;
+    color: #25425f;
+    letter-spacing: 1px;
+}
+
+.contract-preview h2 {
+    margin: 0 0 12px;
+    font-size: 15px;
+}
+
+.contract-preview p {
+    margin: 7px 0;
+}
+
+.contract-page {
+    max-width: 920px;
+    margin: 0 auto 22px;
+    padding-bottom: 18px;
+    border-bottom: 2px solid #d0aa2f;
+}
+
+.contract-info-table {
+    display: table;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background: #fff;
+    color: #111;
+}
+
+.contract-info-table tbody,
+.contract-info-table tr {
+    display: table-row-group;
+}
+
+.contract-info-table tr {
+    display: table-row;
+}
+
+.contract-info-table th,
+.contract-info-table td {
+    display: table-cell;
+    border: 1px solid #2f435d;
+    padding: 9px 12px;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    color: #111;
+    font-size: 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.contract-info-table th {
+    width: 38%;
+    background: #eaf0f6;
+    color: #1f3550;
+    font-weight: 700;
+}
+
+.condition-title {
+    margin: 0 0 18px !important;
+    padding: 10px 16px;
+    border-radius: 4px;
+    background: #2f4f70;
+    color: #fff;
+}
+
+.condition-list {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.condition-list li {
+    margin-bottom: 13px;
+    font-weight: 700;
+}
+
+.conditions-table {
+    width: 100%;
+    min-width: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background: #fff;
+    color: #111;
+}
+
+.conditions-table th,
+.conditions-table td {
+    border: 1px solid #2f435d;
+    padding: 7px 9px;
+    color: #111;
+    font-size: 12px;
+    line-height: 1.25;
+    vertical-align: top;
+    text-align: left;
+}
+
+.conditions-table th {
+    width: 36px;
+    background: #eaf0f6;
+    color: #1f3550;
+    text-align: center;
+    font-weight: 700;
+}
+
+.conditions-table td {
+    font-weight: 700;
+}
+
+.conditions-table .condition-number-col {
+    width: 36px;
+}
+
+.conditions-table .condition-text-col {
+    width: auto;
+}
+
+.contract-note {
+    margin: 26px 0 34px !important;
+    padding: 16px 18px;
+    border-left: 4px solid #d0aa2f;
+    border-radius: 4px;
+    background: #eef2f6;
+    font-weight: 700;
+}
+
+.contract-fill {
+    display: inline;
+    min-height: 1em;
+    padding: 1px 3px;
+    border-radius: 2px;
+}
+
+.contract-fill.active-fill {
+    background: #fff176;
+    box-shadow: 0 0 0 1px rgba(181, 147, 0, 0.35);
+}
+
+.contract-bank-lines {
+    display: grid;
+    gap: 5px;
+}
+
+.signature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.signature-grid.without-guarantor {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.signature-party {
+    min-height: 82px;
+    border-top: 1px solid #111;
+    padding-top: 8px;
+    text-align: center;
+}
+
+.signature-party-name {
+    display: block;
+    margin-top: 10px;
+}
+
+.signature-entry {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.signature-entry small {
+    display: block;
+    margin-top: 0;
+}
+
+.contract-signature-placeholder {
+    width: 150px;
+    height: 58px;
+}
+
+.contract-signature-img {
+    display: block;
+    width: 150px;
+    height: 58px;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+.print-only-signatures {
+    display: none;
 }
 
 table {
     border-collapse: collapse;
-    margin: 16px auto;
-    width: 1200px;
+    margin: 0 auto;
+    width: 100%;
     max-width: 100%;
     background: #1e1e1e;
+    table-layout: fixed;
 }
 
 th, td {
     border: 1px solid #333;
-    padding: 8px 10px;
+    padding: 7px 6px;
     text-align: right;
     white-space: nowrap;
-    font-size: 14px;
+    font-size: 13px;
+    overflow: visible;
+    text-overflow: clip;
 }
 
 th {
@@ -35,6 +672,26 @@ th {
     font-size: 18px;
     font-weight: bold;
     text-align: center;
+}
+
+th:first-child,
+td.year {
+    width: 46px;
+}
+
+th:nth-child(n+2):nth-child(-n+13),
+td:nth-child(n+2):nth-child(-n+13) {
+    width: 82px;
+}
+
+th:nth-child(14),
+td.total {
+    width: 96px;
+}
+
+th:nth-child(15),
+td.percent {
+    width: 86px;
 }
 
 .year {
@@ -71,13 +728,252 @@ th {
 /* ================= TABLET (DESKTOP LOOK, SCROLL OK) ================= */
 @media (max-width: 1023px) {
     body {
-        overflow-x: auto;
+        overflow: hidden;
     }
 
     table {
-        display: block;
-        overflow-x: auto;
         width: 100%;
+        min-width: 1120px;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 650px) {
+    :root {
+        --topbar-height: 42px;
+        --footer-height: 30px;
+    }
+
+    .app-topbar {
+        height: 42px;
+    }
+
+    main,
+    .table-wrapper {
+        height: calc(100vh - var(--topbar-height) - var(--footer-height));
+        height: calc(100dvh - var(--topbar-height) - var(--footer-height));
+    }
+
+    .app-menu {
+        top: 42px;
+    }
+
+    .menu-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 21px;
+    }
+
+    .app-title {
+        font-size: 16px;
+    }
+
+    .app-footer {
+        font-size: 11px;
+        gap: 9px;
+    }
+
+    th, td {
+        padding: 6px 3px;
+        font-size: 10px;
+    }
+
+    .title {
+        font-size: 17px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    th:first-child,
+    td.year {
+        width: 38px;
+    }
+
+    th:nth-child(n+2):nth-child(-n+13),
+    td:nth-child(n+2):nth-child(-n+13) {
+        width: 6.1%;
+    }
+
+    th:nth-child(14),
+    td.total {
+        width: 7.2%;
+        font-size: 9px;
+    }
+
+    th:nth-child(15),
+    td.percent {
+        width: 6.4%;
+        white-space: normal;
+        line-height: 1.15;
+    }
+
+    table {
+        width: 100%;
+        min-width: 0;
+        max-width: 100vw;
+        table-layout: fixed;
+    }
+
+    .percent input {
+        width: 42px;
+    }
+
+    .row-btn {
+        font-size: 13px;
+        padding: 1px 6px;
+        max-width: 44px;
+    }
+
+    .cell-value {
+        padding: 3px 4px;
+    }
+
+    .print-cell {
+        padding: 3px;
+        text-align: center;
+    }
+
+    .print-cell button {
+        width: 100%;
+        max-width: 78px;
+        padding: 4px 2px;
+        font-size: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .contract-info-table {
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        table-layout: fixed;
+    }
+
+    .contract-info-table th,
+    .contract-info-table td,
+    .contract-info-table th:first-child,
+    .contract-info-table td:nth-child(2) {
+        width: auto;
+        min-width: 0;
+        max-width: none;
+        padding: 7px 10px;
+        font-size: 11px;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        line-height: 1.3;
+    }
+
+    .contract-info-table th,
+    .contract-info-table th:first-child {
+        width: 38%;
+    }
+
+    .contract-info-table td,
+    .contract-info-table td:nth-child(2) {
+        width: 62%;
+    }
+
+    .sozlesme-layout {
+        grid-template-columns: 320px 8px minmax(0, 1fr);
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .contract-preview {
+        padding: 20px 30px;
+        font-size: 12px;
+    }
+
+    .contract-form {
+        padding: 9px;
+    }
+
+    .form-head {
+        margin-bottom: 8px;
+    }
+
+    .form-section {
+        padding: 8px;
+        overflow: hidden;
+    }
+
+    .form-section h2 {
+        margin-bottom: 7px;
+        font-size: 14px;
+    }
+
+    .form-section label {
+        margin-bottom: 7px;
+        font-size: 12px;
+    }
+
+    .form-section input,
+    .form-section textarea,
+    .form-section select {
+        margin-top: 3px;
+        padding: 7px 8px;
+    }
+
+    .form-section textarea {
+        min-height: 48px;
+    }
+
+    .signature-pad {
+        height: 86px;
+    }
+
+    .signature-pad-grid {
+        gap: 10px;
+    }
+
+    .signature-pad-subtitle {
+        font-size: 11px;
+    }
+
+    .form-step-nav {
+        padding-top: 7px;
+    }
+
+    .form-step-nav button {
+        min-height: 36px;
+    }
+}
+
+@media screen and (orientation: landscape) and (max-height: 650px) {
+    .contract-preview .conditions-table {
+        width: 100%;
+        min-width: 0;
+        table-layout: fixed;
+    }
+
+    .contract-preview .conditions-table .condition-number-col {
+        width: 32px;
+    }
+
+    .contract-preview .conditions-table .condition-text-col {
+        width: auto;
+    }
+
+    .contract-preview .conditions-table th.condition-number,
+    .contract-preview .conditions-table td.condition-text {
+        display: table-cell;
+        min-width: 0 !important;
+        max-width: none !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+
+    .contract-preview .conditions-table th.condition-number {
+        width: 32px !important;
+        padding: 5px 4px;
+    }
+
+    .contract-preview .conditions-table td.condition-text {
+        width: auto !important;
+        padding: 5px 7px;
+        font-size: 11px;
+        line-height: 1.18;
     }
 }
 
@@ -85,12 +981,132 @@ th {
 @media (max-width: 767px) {
 
     body {
+        padding: 0;
+    }
+
+    .app-title {
+        font-size: 16px;
+        text-align: left;
+    }
+
+    .app-menu {
+        right: 8px;
+        min-width: 0;
+        width: calc(100vw - 16px);
+    }
+
+    .signature-pad-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sozlesme-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(220px, calc(100% - var(--preview-percent) - 12px)) 12px minmax(220px, var(--preview-percent));
+        overflow: auto;
         padding: 10px;
+        gap: 0;
+    }
+
+    .contract-form,
+    .contract-preview {
+        height: 100%;
+        max-height: none;
+    }
+
+    .preview-resize-handle {
+        align-self: center;
+        width: 100%;
+        height: 18px;
+        margin: 0;
+        background: transparent;
+        cursor: row-resize;
+        position: relative;
+    }
+
+    .preview-resize-handle::before {
+        content: "";
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        top: 50%;
+        height: 1px;
+        transform: translateY(-50%);
+        border-radius: 999px;
+        background: linear-gradient(90deg, transparent, rgba(143, 163, 196, 0.65), transparent);
+    }
+
+    .preview-resize-handle::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 58px;
+        height: 7px;
+        transform: translate(-50%, -50%);
+        border-radius: 999px;
+        background: #8fa3c4;
+        box-shadow: 0 1px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.35);
+    }
+
+    .contract-preview {
+        padding: 18px;
+        font-size: 14px;
+    }
+
+    .contract-info-table,
+    .contract-info-table tbody,
+    .contract-info-table tr,
+    .contract-info-table th,
+    .contract-info-table td {
+        display: table;
+        width: 100%;
+    }
+
+    .contract-info-table {
+        display: table;
+    }
+
+    .contract-info-table tbody {
+        display: table-row-group;
+    }
+
+    .contract-info-table tr {
+        display: table-row;
+    }
+
+    .contract-info-table th,
+    .contract-info-table td {
+        display: table-cell;
+        font-size: 11px;
+        padding: 8px;
+        background: #fff !important;
+        color: #111 !important;
+        border: 1px solid #2f435d !important;
+        text-align: left !important;
+        white-space: normal !important;
+    }
+
+    .contract-info-table th {
+        width: 42%;
+        background: #eaf0f6 !important;
+        color: #1f3550 !important;
+    }
+
+    .contract-info-table td::before,
+    .contract-info-table th::before {
+        content: none !important;
+    }
+
+    .signature-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
 
     table {
         width: 100%;
+        min-width: 0;
         border: none;
+        table-layout: auto;
     }
 
     thead {
@@ -102,12 +1118,35 @@ th {
         width: 100%;
     }
 
+    th,
+    td,
+    th:first-child,
+    td.year,
+    th:nth-child(n+2):nth-child(-n+13),
+    td:nth-child(n+2):nth-child(-n+13),
+    th:nth-child(14),
+    td.total,
+    th:nth-child(15),
+    td.percent {
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+
     tr {
         background: #1c1c1c;
-        margin-bottom: 16px;
-        border-radius: 10px;
+        margin: 0 10px 14px;
+        border-radius: 8px;
         padding: 10px;
         border: 1px solid #333;
+        box-sizing: border-box;
+    }
+
+    .form-section input::placeholder,
+    .form-section textarea::placeholder {
+        color: #7f8a9d;
     }
 
     td {
@@ -119,6 +1158,20 @@ th {
         padding: 8px 18px 8px 8px;
         white-space: normal;
         font-size: 15px;
+        min-height: 44px;
+        box-sizing: border-box;
+        gap: 16px;
+    }
+
+    td::before {
+        flex: 0 0 auto;
+        max-width: 45%;
+    }
+
+    td > *:not(button),
+    .cell-value {
+        flex: 0 1 auto;
+        max-width: 55%;
     }
 
     td:last-child {
@@ -141,6 +1194,7 @@ th {
 
         padding: 8px 18px 8px 8px;   /* links weniger Abstand padding: oben | rechts | unten | links */
         text-align: left;          /* statt center */
+        justify-content: space-between;
     }
 
 
@@ -162,9 +1216,69 @@ th {
         background: #262626;
         border-radius: 6px;
     }
+
+  .contract-preview .conditions-table {
+      display: table;
+      width: 100%;
+      min-width: 0;
+      table-layout: fixed;
+      border-collapse: collapse;
+  }
+
+  .contract-preview .conditions-table tbody {
+      display: table-row-group;
+  }
+
+  .contract-preview .conditions-table tr {
+      display: table-row;
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+  }
+
+  .contract-preview .conditions-table th,
+  .contract-preview .conditions-table td {
+      display: table-cell;
+      width: auto !important;
+      min-height: 0;
+      padding: 6px 7px;
+      border: 1px solid #2f435d;
+      font-size: 11px;
+      line-height: 1.22;
+      white-space: normal;
+      color: #111;
+      align-items: initial;
+      justify-content: initial;
+  }
+
+  .contract-preview .conditions-table th {
+      width: 30px !important;
+      text-align: center;
+      background: #eaf0f6;
+      color: #1f3550;
+  }
+
+  .contract-preview .conditions-table td::before,
+  .contract-preview .conditions-table th::before {
+      content: none !important;
+  }
+
   .cell-value {
-      min-width: 120px;
+      min-width: 108px;
       text-align: right;
+  }
+
+  tfoot {
+      display: block;
+      width: 100%;
+      margin: 0 10px 14px;
+      box-sizing: border-box;
+  }
+
+  tfoot tr {
+      margin: 0;
   }
 }
 
@@ -211,10 +1325,204 @@ th {
 
 /* ================= DRUCK = IMMER DESKTOP-TABELLE ================= */
 @media print {
+    body.print-contract {
+        background: white !important;
+    }
+
+    body.print-contract .app-topbar,
+    body.print-contract .app-footer,
+    body.print-contract .contract-form,
+    body.print-contract .preview-resize-handle,
+    body.print-contract #tufePage {
+        display: none !important;
+    }
+
+    body.print-contract main,
+    body.print-contract .app-page,
+    body.print-contract .sozlesme-layout {
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+        padding: 0 !important;
+    }
+
+    body.print-contract #sozlesmePage {
+        display: block !important;
+    }
+
+    body.print-contract .contract-preview {
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+        border: none !important;
+        padding: 0 !important;
+        background: white !important;
+        color: black !important;
+        font-size: 12px !important;
+        line-height: 1.22 !important;
+    }
+
+    body.print-contract .preview-page {
+        break-before: avoid;
+        page-break-before: avoid;
+    }
+
+    body.print-contract .signature-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    body.print-contract .signature-grid.without-guarantor {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    body.print-contract #table {
+        display: none !important;
+    }
+
+    body.print-contract .contract-preview h1,
+    body.print-contract .contract-preview h2,
+    body.print-contract .contract-preview p {
+        color: black !important;
+    }
+
+    body.print-contract .contract-fill {
+        background: transparent !important;
+        font-weight: bold !important;
+        box-shadow: none !important;
+    }
+
+    body.print-contract .contract-preview * {
+        color: black !important;
+    }
+
+    body.print-contract .contract-page {
+        display: block !important;
+        min-height: 0 !important;
+        break-after: page;
+        page-break-after: always;
+        border-bottom: none !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    body.print-contract .general-conditions-page {
+        font-size: 12px !important;
+        line-height: 1.16 !important;
+    }
+
+    body.print-contract .general-conditions-page .condition-title {
+        margin-bottom: 6px !important;
+        padding: 5px 10px !important;
+    }
+
+    body.print-contract .general-conditions-page .condition-title,
+    body.print-contract .special-conditions-page .condition-title {
+        background: transparent !important;
+        color: black !important;
+        border: 1px solid #777 !important;
+    }
+
+    body.print-contract .general-conditions-page .condition-list li {
+        margin-bottom: 3px !important;
+    }
+
+    body.print-contract .special-conditions-page {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    body.print-contract .print-only-signatures {
+        display: block !important;
+        margin-top: 12px !important;
+    }
+
+    body.print-contract .signature-grid {
+        margin-top: 12px !important;
+        gap: 16px !important;
+    }
+
+    body.print-contract .signature-party {
+        min-height: 58px !important;
+        padding-top: 5px !important;
+    }
+
+    body.print-contract .signature-party-name {
+        margin-top: 5px !important;
+    }
+
+    body.print-contract .signature-entry {
+        gap: 4px !important;
+        margin-top: 8px !important;
+    }
+
+    body.print-contract .contract-signature-img {
+        width: 128px !important;
+        height: 38px !important;
+        margin-top: 0 !important;
+    }
+
+    body.print-contract .contract-signature-placeholder {
+        width: 128px !important;
+        height: 38px !important;
+    }
+
+    body.print-contract .contract-info-table th,
+    body.print-contract .contract-info-table td {
+        font-size: 12px !important;
+        line-height: 1.2 !important;
+        padding: 5px 8px !important;
+    }
+
+    body.print-contract .conditions-table {
+        display: table !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        border-collapse: collapse !important;
+        table-layout: fixed !important;
+        page-break-inside: auto;
+    }
+
+    body.print-contract .conditions-table tbody {
+        display: table-row-group !important;
+    }
+
+    body.print-contract .conditions-table tr {
+        display: table-row !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    body.print-contract .conditions-table th,
+    body.print-contract .conditions-table td {
+        display: table-cell !important;
+        border: 1px solid #777 !important;
+        padding: 4px 6px !important;
+        font-size: 12px !important;
+        line-height: 1.16 !important;
+        color: black !important;
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: anywhere !important;
+        vertical-align: top !important;
+    }
+
+    body.print-contract .conditions-table th {
+        width: 24px !important;
+        min-width: 24px !important;
+        max-width: 24px !important;
+        text-align: center !important;
+        background: transparent !important;
+        font-weight: bold !important;
+    }
+
+    body.print-contract .conditions-table td::before,
+    body.print-contract .conditions-table th::before {
+        content: none !important;
+    }
 
     @page {
-        size: A4 landscape;
-        margin: 10mm;
+        size: A4 portrait;
+        margin: 8mm;
     }
 
     body {
@@ -388,6 +1696,31 @@ th {
             min-width: 70px !important;
             max-width: 70px !important;
             text-align: center !important;
+        }
+
+        body.print-contract .conditions-table .condition-number-col {
+            width: 24px !important;
+        }
+
+        body.print-contract .conditions-table .condition-text-col {
+            width: auto !important;
+        }
+
+        body.print-contract .conditions-table .condition-number,
+        body.print-contract .conditions-table th.condition-number {
+            width: 24px !important;
+            min-width: 24px !important;
+            max-width: 24px !important;
+            padding-left: 3px !important;
+            padding-right: 3px !important;
+            text-align: center !important;
+        }
+
+        body.print-contract .conditions-table .condition-text,
+        body.print-contract .conditions-table td.condition-text {
+            width: auto !important;
+            min-width: 0 !important;
+            max-width: none !important;
         }
 
    
